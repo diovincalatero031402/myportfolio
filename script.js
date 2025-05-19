@@ -62,26 +62,6 @@ filterButtons.forEach((button) => {
   });
 });
 
-// Form submission (EmailJS removed)
-const contactForm = document.getElementById("contactForm");
-
-if (contactForm) {
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const subject = document.getElementById("subject").value;
-    const message = document.getElementById("message").value;
-
-    // Placeholder for your form handling logic
-    console.log("Form submitted:", { name, email, subject, message });
-
-    alert("Thank you! Your message has been recorded (but not sent).");
-    contactForm.reset();
-  });
-}
-
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
