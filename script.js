@@ -116,32 +116,41 @@ window.addEventListener("load", animateOnScroll);
 
 
 const btn = document.getElementById('button');
+const spinner = document.getElementById('spinner');
+const form = document.getElementById('contactForm');
 
-document.getElementById('contactForm').addEventListener('submit', function(event) {
+form.addEventListener('submit', function(event) {
   event.preventDefault();
 
+  // Disable the button and show the spinner
+  btn.disabled = true;
   btn.value = 'Sending...';
+  spinner.style.display = 'inline';
 
   const serviceID = 'default_service';
   const templateID = 'template_p65zqaz';
 
   emailjs.sendForm(serviceID, templateID, this)
     .then(() => {
+      btn.disabled = false;
       btn.value = 'Send Email';
+      spinner.style.display = 'none';
 
-      // SweetAlert2 success
       Swal.fire({
         icon: 'success',
         title: 'Message Sent!',
         text: 'Your email has been successfully sent.',
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'OK'
+      }).then(() => {
+        form.reset(); // Reset the form after success
       });
 
     }, (err) => {
+      btn.disabled = false;
       btn.value = 'Send Email';
+      spinner.style.display = 'none';
 
-      // SweetAlert2 error
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
