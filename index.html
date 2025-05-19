@@ -7,6 +7,13 @@
     <title>My Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        (function () {
+            emailjs.init("l8YntU2oLS-Vkl4lD"); // Replace with your EmailJS public key
+        })();
+    </script>
 </head>
 
 <body>
@@ -226,7 +233,7 @@
                 </div>
                 <div class="contact-form">
                     <h3>Send a Message</h3>
-                    <form id="contactForm" action="send_email.php" method="POST">
+                    <form id="contactForm">
                         <div class="form-group">
                             <input type="text" id="name" name="name" placeholder="Your Name" required>
                         </div>
@@ -241,25 +248,6 @@
                         </div>
                         <button type="submit" class="btn primary-btn">Send Message</button>
                     </form>
-                    <script>
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const status = urlParams.get('status');
-                        const message = urlParams.get('message');
-
-                        if (status === 'success') {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Message Sent',
-                                text: message || 'Your message was sent successfully!',
-                            });
-                        } else if (status === 'error') {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: message || 'Something went wrong. Please try again later.',
-                            });
-                        }
-                    </script>
                 </div>
             </div>
         </div>
@@ -276,7 +264,25 @@
     <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
 
     <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            emailjs.send("service_fp2ddt5", "template_p65zqaz", {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                subject: document.getElementById("subject").value,
+                message: document.getElementById("message").value
+            }).then(function (response) {
+                Swal.fire("Success!", "Your message was sent successfully.", "success");
+                document.getElementById("contactForm").reset();
+            }, function (error) {
+                Swal.fire("Error!", "There was a problem sending your message.", "error");
+                console.error("EmailJS error:", error);
+            });
+        });
+    </script>
 </body>
 
 </html>
