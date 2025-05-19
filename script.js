@@ -116,21 +116,38 @@ window.addEventListener("load", animateOnScroll);
 
 
 const btn = document.getElementById('button');
-  document.getElementById('contactForm')
-  .addEventListener('submit', function(event) {
-    event.preventDefault();
 
-    btn.value = 'Sending...';
+document.getElementById('contactForm').addEventListener('submit', function(event) {
+  event.preventDefault();
 
-    const serviceID = 'default_service';
-    const templateID = 'template_p65zqaz';
+  btn.value = 'Sending...';
 
-    emailjs.sendForm(serviceID, templateID, this)
-      .then(() => {
-        btn.value = 'Send Email';
-        alert('Sent!');
-      }, (err) => {
-        btn.value = 'Send Email';
-        alert(JSON.stringify(err));
+  const serviceID = 'default_service';
+  const templateID = 'template_p65zqaz';
+
+  emailjs.sendForm(serviceID, templateID, this)
+    .then(() => {
+      btn.value = 'Send Email';
+
+      // SweetAlert2 success
+      Swal.fire({
+        icon: 'success',
+        title: 'Message Sent!',
+        text: 'Your email has been successfully sent.',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
       });
-  });
+
+    }, (err) => {
+      btn.value = 'Send Email';
+
+      // SweetAlert2 error
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: `<pre>${JSON.stringify(err, null, 2)}</pre>`,
+        confirmButtonColor: '#d33'
+      });
+    });
+});
