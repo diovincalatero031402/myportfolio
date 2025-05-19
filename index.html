@@ -7,13 +7,6 @@
     <title>My Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script>
-        (function () {
-            emailjs.init("l8YntU2oLS-Vkl4lD"); // Replace with your EmailJS public key
-        })();
-    </script>
 </head>
 
 <body>
@@ -246,7 +239,7 @@
                         <div class="form-group">
                             <textarea id="message" name="message" placeholder="Your Message" required></textarea>
                         </div>
-                        <button type="submit" class="btn primary-btn">Send Message</button>
+                        <button type="submit" id="button" class="btn primary-btn">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -265,23 +258,10 @@
 
     <script src="script.js"></script>
 
-    <script>
-        document.getElementById("contactForm").addEventListener("submit", function (e) {
-            e.preventDefault();
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-            emailjs.send("service_fp2ddt5", "template_p65zqaz", {
-                name: document.getElementById("name").value,
-                email: document.getElementById("email").value,
-                subject: document.getElementById("subject").value,
-                message: document.getElementById("message").value
-            }).then(function (response) {
-                Swal.fire("Success!", "Your message was sent successfully.", "success");
-                document.getElementById("contactForm").reset();
-            }, function (error) {
-                Swal.fire("Error!", "There was a problem sending your message.", "error");
-                console.error("EmailJS error:", error);
-            });
-        });
+    <script type="text/javascript">
+        emailjs.init('l8YntU2oLS-Vkl4lD')
     </script>
 </body>
 
